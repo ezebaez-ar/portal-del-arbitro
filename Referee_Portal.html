@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal del Árbitro — El Charity 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:   #0D2240;
+    --blue:   #1B57B8;
+    --blue2:  #2468D4;
+    --sky:    #4A90E2;
+    --white:  #FFFFFF;
+    --lgray:  #F0F4FB;
+    --mgray:  #C8D4E8;
+    --dgray:  #6B7FA3;
+    --red:    #E74C3C;
+    --green:  #27AE60;
+    --yellow: #F0C030;
+    --orange: #E67E22;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--lgray);
+    color: var(--navy);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--navy);
+    padding: 20px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    background: var(--blue);
+    border-radius: 50%;
+    opacity: 0.15;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -50px; left: 40%;
+    width: 150px; height: 150px;
+    background: var(--blue2);
+    border-radius: 50%;
+    opacity: 0.10;
+  }
+  .header-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .header-emoji {
+    font-size: 42px;
+    filter: drop-shadow(0 2px 8px rgba(27,87,184,0.5));
+  }
+  .header-text .eyebrow {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--sky);
+    margin-bottom: 2px;
+  }
+  .header-text .title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--white);
+    letter-spacing: 2px;
+  }
+  .header-text .title span { color: var(--yellow); }
+  .header-text .subtitle {
+    font-size: 11px;
+    color: var(--mgray);
+    margin-top: 4px;
+  }
+
+  /* ── MAIN ── */
+  .main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 20px 48px;
+  }
+
+  /* ── SELECTOR SCREEN ── */
+  #selector-screen {
+    text-align: center;
+    padding: 32px 0;
+  }
+  .selector-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--navy);
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+  .selector-sub {
+    font-size: 13px;
+    color: var(--dgray);
+    margin-bottom: 32px;
+  }
+  .referee-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+  .ref-btn {
+    background: var(--white);
+    border: 2px solid var(--mgray);
+    border-radius: 16px;
+    padding: 20px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+  }
+  .ref-btn:hover {
+    border-color: var(--blue);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(27,87,184,0.15);
+  }
+  .ref-btn .ref-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue), var(--navy));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin: 0 auto 10px;
+  }
+  .ref-btn .ref-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .ref-btn .ref-count {
+    font-size: 11px;
+    color: var(--dgray);
+    font-weight: 600;
+  }
+  .ref-btn:hover .ref-name { color: var(--blue); }
+
+  /* ── DASHBOARD ── */
+  #dashboard {
+    display: none;
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--blue);
+    cursor: pointer;
+    padding: 4px 0;
+    margin-bottom: 20px;
+  }
+  .back-btn:hover { color: var(--navy); }
+
+  .dashboard-hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .dashboard-hero::after {
+    content: '⚽';
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 64px;
+    opacity: 0.12;
+  }
+  .dashboard-hero .dh-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--sky);
+    margin-bottom: 6px;
+  }
+  .dashboard-hero .dh-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    color: var(--white);
+    letter-spacing: 2px;
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .dashboard-hero .dh-stats {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .stat-chip {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 100px;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+  }
+  .stat-chip span { color: var(--yellow); }
+
+  /* ── TABS ── */
+  .tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 20px;
+    background: var(--white);
+    border-radius: 12px;
+    padding: 6px;
+    box-shadow: 0 2px 8px rgba(13,34,64,0.06);
+  }
+  .tab {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: none;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--dgray);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab.active {
+    background: var(--navy);
+    color: var(--white);
+  }
+  .tab:hover:not(.active) { color: var(--navy); }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── MATCH CARDS ── */
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--dgray);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--mgray);
+  }
+
+  .match-list { display: flex; flex-direction: column; gap: 12px; }
+
+  .match-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 16px 18px;
+    box-shadow: 0 2px 8px rgba(13,34,64,0.06);
+    border-left: 4px solid var(--blue);
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    gap: 14px;
+    align-items: center;
+  }
+  .match-card.playoff { border-left-color: var(--yellow); }
+  .match-card.final   { border-left-color: var(--orange); }
+
+  .match-time-block {
+    text-align: center;
+  }
+  .match-time {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--navy);
+    line-height: 1;
+  }
+  .match-number {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--dgray);
+    letter-spacing: 1px;
+  }
+
+  .match-info .teams {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .match-info .vs {
+    color: var(--dgray);
+    font-weight: 400;
+    font-size: 12px;
+    margin: 0 4px;
+  }
+  .match-meta {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+  }
+  .meta-tag {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: var(--lgray);
+    color: var(--dgray);
+  }
+  .meta-tag.pitch { background: #EBF3FF; color: var(--blue); }
+  .meta-tag.type-playoff { background: #FFF8E1; color: #B8860B; }
+  .meta-tag.type-final   { background: #FFF3E0; color: var(--orange); }
+
+  .match-pitch-badge {
+    text-align: center;
+    background: var(--lgray);
+    border-radius: 10px;
+    padding: 8px 10px;
+    min-width: 70px;
+  }
+  .match-pitch-badge .pitch-name {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--blue);
+  }
+  .match-pitch-badge .pitch-label {
+    font-size: 9px;
+    color: var(--dgray);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding-left: 24px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: var(--mgray);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--blue);
+    border: 2px solid var(--white);
+    box-shadow: 0 0 0 2px var(--blue);
+  }
+  .timeline-item.highlight::before { background: var(--yellow); box-shadow: 0 0 0 2px var(--yellow); }
+  .timeline-time {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    color: var(--navy);
+    line-height: 1;
+  }
+  .timeline-event {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .timeline-sub {
+    font-size: 11px;
+    color: var(--dgray);
+    margin-top: 2px;
+  }
+
+  /* ── INFO CARDS ── */
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 480px) { .info-grid { grid-template-columns: 1fr; } }
+  .info-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 2px 8px rgba(13,34,64,0.06);
+  }
+  .info-card h3 {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--dgray);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .kit-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--lgray);
+    font-size: 13px;
+    color: var(--navy);
+    font-weight: 500;
+  }
+  .kit-item:last-child { border-bottom: none; }
+  .kit-item .icon { font-size: 16px; width: 24px; text-align: center; }
+
+  .rule-item {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--lgray);
+    font-size: 13px;
+    color: var(--navy);
+    font-weight: 500;
+    display: flex;
+    gap: 8px;
+  }
+  .rule-item:last-child { border-bottom: none; }
+
+  .checklist { margin-top: 0; }
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--lgray);
+    font-size: 13px;
+    color: var(--navy);
+  }
+  .check-item:last-child { border-bottom: none; }
+  .check-box {
+    width: 20px; height: 20px;
+    border: 2px solid var(--mgray);
+    border-radius: 6px;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 13px;
+  }
+  .check-box.checked {
+    background: var(--green);
+    border-color: var(--green);
+    color: white;
+  }
+
+  .quiz-card {
+    background: linear-gradient(135deg, var(--navy), var(--blue));
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    color: white;
+    margin-top: 20px;
+  }
+  .quiz-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    color: var(--yellow);
+  }
+  .quiz-card p { font-size: 12px; color: var(--mgray); margin-bottom: 14px; }
+  .quiz-btn {
+    display: inline-block;
+    background: var(--yellow);
+    color: var(--navy);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 10px 24px;
+    border-radius: 100px;
+    text-decoration: none;
+  }
+  .quiz-btn:hover { background: #FFD740; }
+
+  /* ── LOCATION CARD ── */
+  .location-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(13,34,64,0.06);
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+  .location-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+  }
+  .location-info h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .location-info p {
+    font-size: 13px;
+    color: var(--dgray);
+    margin-bottom: 2px;
+  }
+  .location-info a {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--blue);
+    text-decoration: none;
+  }
+  .location-info a:hover { text-decoration: underline; }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--dgray);
+  }
+  .empty-state .es-icon { font-size: 48px; margin-bottom: 12px; }
+  .empty-state p { font-size: 14px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-emoji">⚽</div>
+    <div class="header-text">
+      <div class="eyebrow">El Charity 2026 · Play for Generando Puentes</div>
+      <div class="title">Portal del <span>Árbitro</span></div>
+      <div class="subtitle">📅 Sábado 20 Jun 2026 &nbsp;·&nbsp; 📍 Haggerston School, London E2 8LS</div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ── SELECTOR SCREEN ── -->
+  <div id="selector-screen">
+    <div class="selector-title">¿Quién sos?</div>
+    <div class="selector-sub">Seleccioná tu nombre para ver tus partidos asignados</div>
+    <div class="referee-grid" id="referee-grid"></div>
+  </div>
+
+  <!-- ── DASHBOARD ── -->
+  <div id="dashboard">
+    <button class="back-btn" onclick="showSelector()">← Volver</button>
+
+    <div class="dashboard-hero">
+      <div class="dh-label">Árbitro asignado</div>
+      <div class="dh-name" id="dash-name">—</div>
+      <div class="dh-stats">
+        <div class="stat-chip">📅 Sáb 20 Jun</div>
+        <div class="stat-chip">📍 Haggerston School</div>
+        <div class="stat-chip">⚽ <span id="dash-count">0</span> partidos</div>
+        <div class="stat-chip">⏰ Llegada: <span>12:00 PM</span></div>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('matches')">🏟 Mis Partidos</button>
+      <button class="tab" onclick="switchTab('schedule')">⏱ Cronograma</button>
+      <button class="tab" onclick="switchTab('info')">📋 Info del Día</button>
+    </div>
+
+    <!-- TAB: MIS PARTIDOS -->
+    <div class="tab-panel active" id="tab-matches">
+      <div class="section-title">Partidos asignados</div>
+      <div class="match-list" id="match-list"></div>
+    </div>
+
+    <!-- TAB: CRONOGRAMA -->
+    <div class="tab-panel" id="tab-schedule">
+      <div class="section-title">Cronograma del Día</div>
+      <div class="timeline">
+        <div class="timeline-item highlight">
+          <div class="timeline-time">12:00 PM</div>
+          <div class="timeline-event">⚠️ Llegada & Briefing</div>
+          <div class="timeline-sub">Registro de árbitros — ¡Puntual, sí o sí!</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">12:20 PM</div>
+          <div class="timeline-event">📸 Sesión de Fotos</div>
+          <div class="timeline-sub">Individual + grupal</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">12:40 PM</div>
+          <div class="timeline-event">🎙️ Apertura Oficial</div>
+          <div class="timeline-sub">Discurso de bienvenida</div>
+        </div>
+        <div class="timeline-item highlight">
+          <div class="timeline-time">1:00 PM</div>
+          <div class="timeline-event">⚽ Kick-Off — Fase de Grupos</div>
+          <div class="timeline-sub">Cada 30 min · 5 canchas</div>
+        </div>
+        <div class="timeline-item highlight">
+          <div class="timeline-time">4:00 PM</div>
+          <div class="timeline-event">🔥 Playoffs</div>
+          <div class="timeline-sub">Fase eliminatoria</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">5:00 PM</div>
+          <div class="timeline-event">⭐ Final Mujeres</div>
+          <div class="timeline-sub">Cancha: Maracana</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">5:30 PM</div>
+          <div class="timeline-event">⭐ Final Hombres</div>
+          <div class="timeline-sub">Cancha: Maracana</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">6:30 PM</div>
+          <div class="timeline-event">🏆 Premios & Cierre</div>
+          <div class="timeline-sub">Objetivo: antes de las 7 PM</div>
+        </div>
+      </div>
+
+      <div class="location-card" style="margin-top: 24px;">
+        <div class="location-icon">📍</div>
+        <div class="location-info">
+          <h3>Haggerston School</h3>
+          <p>Weymouth Terrace, London, E2 8LS</p>
+          <p style="margin-top:4px; font-size:12px; color: var(--dgray);">Llegada: <strong>12:00 PM sharp</strong></p>
+          <a href="https://maps.google.com/?q=Haggerston+School+Weymouth+Terrace+London+E2+8LS" target="_blank">📍 Ver en Google Maps →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: INFO -->
+    <div class="tab-panel" id="tab-info">
+
+      <div class="section-title" style="margin-top:0">Tu rol como árbitro</div>
+      <div class="info-card" style="margin-bottom: 16px;">
+        <p style="font-size:13px; color:var(--navy); line-height:1.6; margin-bottom:12px;">
+          <strong>Sos el jefe en cancha 👊</strong> Cada partido dura <strong>20 minutos</strong>, sin cambio de lado.<br>
+          Tu misión: que todos jueguen bien, se diviertan y no se maten.
+        </p>
+        <div class="rule-item"><span style="color:var(--green)">✅</span> Llegar a las 12:00 PM — puntual, sí o sí</div>
+        <div class="rule-item"><span style="color:var(--green)">✅</span> Hacer el sorteo con los capitanes al inicio</div>
+        <div class="rule-item"><span style="color:var(--green)">✅</span> Manejar el tiempo: 20 minutos exactos por partido</div>
+        <div class="rule-item"><span style="color:var(--green)">✅</span> Ser justo y consistente con todos los equipos</div>
+        <div class="rule-item"><span style="color:var(--green)">✅</span> Anotar el resultado en la planilla y llevarlo a Registración</div>
+        <div class="rule-item"><span style="color:var(--green)">✅</span> Avisar enseguida si hay algún problema serio</div>
+        <div class="rule-item"><span style="color:var(--red)">🚫</span> Meterte en el fixture — eso lo maneja el equipo</div>
+        <div class="rule-item"><span style="color:var(--red)">🚫</span> Resolver peleas fuera de la cancha</div>
+        <div class="rule-item"><span style="color:var(--red)">🚫</span> Inventar reglas sobre la marcha</div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>🎒 Kit del árbitro</h3>
+          <div class="kit-item"><span class="icon">👕</span> Pechera de árbitro</div>
+          <div class="kit-item"><span class="icon">📢</span> Silbato</div>
+          <div class="kit-item"><span class="icon">🟨</span> Tarjetas amarillas y rojas</div>
+          <div class="kit-item"><span class="icon">📋</span> Planilla + birome</div>
+          <div class="kit-item"><span class="icon">🪙</span> Moneda para sorteo</div>
+          <div class="kit-item"><span class="icon">🥪</span> Almuerzo incluido</div>
+        </div>
+        <div class="info-card">
+          <h3>🎒 Vos traés</h3>
+          <div class="kit-item"><span class="icon">👟</span> Ropa cómoda y calzado deportivo</div>
+          <div class="kit-item"><span class="icon">🧢</span> Gorro para el sol</div>
+          <div class="kit-item"><span class="icon">⏱️</span> Reloj — ¡imprescindible!</div>
+        </div>
+      </div>
+
+      <div class="section-title">Checklist pre-partido</div>
+      <div class="info-card" style="margin-bottom: 20px;">
+        <div class="checklist" id="checklist">
+          <div class="check-item"><div class="check-box" onclick="toggleCheck(this)"></div> Ya hice el quiz de reglas 📝</div>
+          <div class="check-item"><div class="check-box" onclick="toggleCheck(this)"></div> Le avisé a Pira que voy ✅</div>
+          <div class="check-item"><div class="check-box" onclick="toggleCheck(this)"></div> Estoy en el grupo de WhatsApp 💬</div>
+          <div class="check-item"><div class="check-box" onclick="toggleCheck(this)"></div> Tengo claro que llego a las 12:00 PM 🕛</div>
+          <div class="check-item"><div class="check-box" onclick="toggleCheck(this)"></div> Tengo el reloj y la ropa lista ⏱️</div>
+        </div>
+      </div>
+
+      <div class="quiz-card">
+        <h3>📝 Quiz de Reglas</h3>
+        <p>¡Dale una vuelta antes del sábado! Cuanto más lo hacés, más fácil va a ser el día del partido.</p>
+        <a class="quiz-btn" href="https://ezebaez-ar.github.io/el-charity-quiz/" target="_blank">Hacer el Quiz →</a>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────
+const matches = [
+  { id:1,  tournament:'Men',   type:'Group Stage',  pitch:'Wembley',  time:'1:00 PM', group:'Men A',        teamA:'Los Pendex',          teamB:'Five Alive',            referee:'Tincho' },
+  { id:2,  tournament:'Women', type:'Group Stage',  pitch:'Metlife',  time:'1:00 PM', group:'Women A',      teamA:'La Scaloneta',        teamB:'Chilenas FC',           referee:'Mati' },
+  { id:3,  tournament:'Women', type:'Group Stage',  pitch:'Azteca',   time:'1:00 PM', group:'Women A',      teamA:'Apunadas FC',         teamB:'Chimichurri',           referee:'Valen' },
+  { id:4,  tournament:'Men',   type:'Group Stage',  pitch:'Maracana', time:'1:00 PM', group:'Men B',        teamA:'Bayer Neverlosen',    teamB:'Jueves Revueltos FC',   referee:'Pira' },
+  { id:5,  tournament:'Men',   type:'Group Stage',  pitch:'Lusail',   time:'1:00 PM', group:'Men C',        teamA:'Barrilete Cosmico',   teamB:'QVR',                   referee:'Rafiki' },
+  { id:6,  tournament:'Men',   type:'Group Stage',  pitch:'Wembley',  time:'1:30 PM', group:'Men A',        teamA:'London Welsh',        teamB:'Chompas FC',            referee:'Charly' },
+  { id:7,  tournament:'Women', type:'Group Stage',  pitch:'Metlife',  time:'1:30 PM', group:'Women A',      teamA:'La Scaloneta',        teamB:'Apunadas FC',           referee:'Mati' },
+  { id:8,  tournament:'Women', type:'Group Stage',  pitch:'Azteca',   time:'1:30 PM', group:'Women A',      teamA:'Chilenas FC',         teamB:'Cabras FC',             referee:'Valen' },
+  { id:9,  tournament:'Men',   type:'Group Stage',  pitch:'Maracana', time:'1:30 PM', group:'Men B',        teamA:'Ireland London',      teamB:'La Banda Oriental',     referee:'Pira' },
+  { id:10, tournament:'Men',   type:'Group Stage',  pitch:'Lusail',   time:'1:30 PM', group:'Men C',        teamA:'Holloway Royals FC',  teamB:'Arg FC Legends',        referee:'Rafiki' },
+  { id:11, tournament:'Men',   type:'Group Stage',  pitch:'Wembley',  time:'2:00 PM', group:'Men A',        teamA:'Los Pendex',          teamB:'London Welsh',          referee:'Sharky' },
+  { id:12, tournament:'Women', type:'Group Stage',  pitch:'Metlife',  time:'2:00 PM', group:'Women A',      teamA:'La Scaloneta',        teamB:'Chimichurri',           referee:'Mati' },
+  { id:13, tournament:'Women', type:'Group Stage',  pitch:'Azteca',   time:'2:00 PM', group:'Women A',      teamA:'Cabras FC',           teamB:'Apunadas FC',           referee:'Valen' },
+  { id:14, tournament:'Men',   type:'Group Stage',  pitch:'Maracana', time:'2:00 PM', group:'Men B',        teamA:'Bayer Neverlosen',    teamB:'Ireland London',        referee:'Pira' },
+  { id:15, tournament:'Men',   type:'Group Stage',  pitch:'Lusail',   time:'2:00 PM', group:'Men C',        teamA:'Barrilete Cosmico',   teamB:'Holloway Royals FC',    referee:'Rafiki' },
+  { id:16, tournament:'Men',   type:'Group Stage',  pitch:'Wembley',  time:'2:30 PM', group:'Men A',        teamA:'Five Alive',          teamB:'Chompas FC',            referee:'Charly' },
+  { id:17, tournament:'Women', type:'Group Stage',  pitch:'Metlife',  time:'2:30 PM', group:'Women A',      teamA:'Chilenas FC',         teamB:'Apunadas FC',           referee:'Mati' },
+  { id:18, tournament:'Women', type:'Group Stage',  pitch:'Azteca',   time:'2:30 PM', group:'Women A',      teamA:'La Scaloneta',        teamB:'Cabras FC',             referee:'Valen' },
+  { id:19, tournament:'Men',   type:'Group Stage',  pitch:'Maracana', time:'2:30 PM', group:'Men B',        teamA:'Jueves Revueltos FC', teamB:'La Banda Oriental',     referee:'Pira' },
+  { id:20, tournament:'Men',   type:'Group Stage',  pitch:'Lusail',   time:'2:30 PM', group:'Men C',        teamA:'QVR',                 teamB:'Arg FC Legends',        referee:'Rafiki' },
+  { id:21, tournament:'Men',   type:'Group Stage',  pitch:'Wembley',  time:'3:00 PM', group:'Men A',        teamA:'Los Pendex',          teamB:'Chompas FC',            referee:'Turco' },
+  { id:22, tournament:'Women', type:'Group Stage',  pitch:'Metlife',  time:'3:00 PM', group:'Women A',      teamA:'Chilenas FC',         teamB:'Chimichurri',           referee:'Valen' },
+  { id:23, tournament:'Men',   type:'Group Stage',  pitch:'Azteca',   time:'3:00 PM', group:'Men A',        teamA:'Five Alive',          teamB:'London Welsh',          referee:'Mati' },
+  { id:24, tournament:'Men',   type:'Group Stage',  pitch:'Maracana', time:'3:00 PM', group:'Men B',        teamA:'Bayer Neverlosen',    teamB:'La Banda Oriental',     referee:'Pira' },
+  { id:25, tournament:'Men',   type:'Group Stage',  pitch:'Lusail',   time:'3:00 PM', group:'Men B',        teamA:'Jueves Revueltos FC', teamB:'Ireland London',        referee:'Rafiki' },
+  { id:26, tournament:'Men',   type:'Group Stage',  pitch:'Wembley',  time:'3:30 PM', group:'Men C',        teamA:'Barrilete Cosmico',   teamB:'Arg FC Legends',        referee:'Rafiki' },
+  { id:27, tournament:'Men',   type:'Group Stage',  pitch:'Metlife',  time:'3:30 PM', group:'Men C',        teamA:'QVR',                 teamB:'Holloway Royals FC',    referee:'Pira' },
+  { id:28, tournament:'Women', type:'Group Stage',  pitch:'Azteca',   time:'3:30 PM', group:'Women A',      teamA:'Chimichurri',         teamB:'Cabras FC',             referee:'Mati' },
+  { id:30, tournament:'Men',   type:'Quarter Final',pitch:'Lusail',   time:'3:30 PM', group:'Men Playoff',  teamA:'2A',                  teamB:'2B',                    referee:'TBD' },
+  { id:31, tournament:'Men',   type:'Quarter Final',pitch:'Lusail',   time:'4:00 PM', group:'Men Playoff',  teamA:'1A',                  teamB:'Best 3rd',              referee:'Rafiki' },
+  { id:32, tournament:'Men',   type:'Quarter Final',pitch:'Maracana', time:'4:00 PM', group:'Men Playoff',  teamA:'1C',                  teamB:'Second Best 3rd',       referee:'Pira' },
+  { id:33, tournament:'Men',   type:'Quarter Final',pitch:'Wembley',  time:'4:00 PM', group:'Men Playoff',  teamA:'1B',                  teamB:'2C',                    referee:'TBD' },
+  { id:34, tournament:'Women', type:'Semifinal',    pitch:'Azteca',   time:'4:00 PM', group:'Women Playoff',teamA:'1A',                  teamB:'4A',                    referee:'Valen' },
+  { id:35, tournament:'Women', type:'Semifinal',    pitch:'Metlife',  time:'4:00 PM', group:'Women Playoff',teamA:'2A',                  teamB:'3A',                    referee:'Mati' },
+  { id:36, tournament:'Men',   type:'Semifinal',    pitch:'Lusail',   time:'4:30 PM', group:'Men Playoff',  teamA:'W30',                 teamB:'W33',                   referee:'Rafiki' },
+  { id:37, tournament:'Men',   type:'Semifinal',    pitch:'Maracana', time:'4:30 PM', group:'Men Playoff',  teamA:'W31',                 teamB:'W32',                   referee:'Pira' },
+  { id:41, tournament:'Women', type:'Final',        pitch:'Maracana', time:'5:00 PM', group:'Women Playoff',teamA:'W34',                 teamB:'W35',                   referee:'Mati' },
+  { id:42, tournament:'Men',   type:'Final',        pitch:'Maracana', time:'5:30 PM', group:'Men Playoff',  teamA:'W36',                 teamB:'W37',                   referee:'Rafiki' },
+];
+
+const refereeEmojis = {
+  'Tincho': '🦁', 'Mati': '🐯', 'Valen': '🦊',
+  'Pira':   '🐺', 'Rafiki': '🦅', 'Charly': '🐻',
+  'Sharky': '🦈', 'Turco': '🐉'
+};
+
+// Get unique referees (excluding TBD)
+const referees = [...new Set(matches.map(m => m.referee))].filter(r => r !== 'TBD').sort();
+
+// ── BUILD SELECTOR ──────────────────────────────────────────────────
+function buildSelector() {
+  const grid = document.getElementById('referee-grid');
+  grid.innerHTML = referees.map(ref => {
+    const count = matches.filter(m => m.referee === ref).length;
+    const emoji = refereeEmojis[ref] || '⚽';
+    return `
+      <button class="ref-btn" onclick="showDashboard('${ref}')">
+        <div class="ref-avatar">${emoji}</div>
+        <div class="ref-name">${ref}</div>
+        <div class="ref-count">${count} partido${count !== 1 ? 's' : ''}</div>
+      </button>`;
+  }).join('');
+}
+
+// ── SHOW DASHBOARD ──────────────────────────────────────────────────
+function showDashboard(referee) {
+  document.getElementById('selector-screen').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+
+  const myMatches = matches.filter(m => m.referee === referee);
+  document.getElementById('dash-name').textContent = referee;
+  document.getElementById('dash-count').textContent = myMatches.length;
+
+  const list = document.getElementById('match-list');
+
+  if (myMatches.length === 0) {
+    list.innerHTML = `<div class="empty-state"><div class="es-icon">📋</div><p>No tenés partidos asignados.</p></div>`;
+    return;
+  }
+
+  // Group by time slot
+  const grouped = {};
+  myMatches.forEach(m => {
+    if (!grouped[m.time]) grouped[m.time] = [];
+    grouped[m.time].push(m);
+  });
+
+  list.innerHTML = Object.keys(grouped).sort().map(time => {
+    const group = grouped[time];
+    return group.map(m => {
+      const isPlayoff = ['Quarter Final','Semifinal'].includes(m.type);
+      const isFinal = m.type === 'Final';
+      const cardClass = isFinal ? 'final' : isPlayoff ? 'playoff' : '';
+      const typeClass = isFinal ? 'type-final' : isPlayoff ? 'type-playoff' : '';
+      const typeBadge = m.type !== 'Group Stage'
+        ? `<span class="meta-tag ${typeClass}">${m.type}</span>` : '';
+
+      return `
+        <div class="match-card ${cardClass}">
+          <div class="match-time-block">
+            <div class="match-time">${m.time.replace(' PM','').replace(' AM','')}<span style="font-size:11px;color:var(--dgray)">${m.time.includes('PM') ? 'PM' : 'AM'}</span></div>
+            <div class="match-number">#${m.id}</div>
+          </div>
+          <div class="match-info">
+            <div class="teams">
+              ${m.teamA} <span class="vs">vs</span> ${m.teamB}
+            </div>
+            <div class="match-meta">
+              <span class="meta-tag pitch">📍 ${m.pitch}</span>
+              <span class="meta-tag">${m.tournament === 'Women' ? '🩷 Mujeres' : '🔵 Hombres'}</span>
+              <span class="meta-tag">${m.group}</span>
+              ${typeBadge}
+            </div>
+          </div>
+          <div class="match-pitch-badge">
+            <div class="pitch-name">${m.pitch}</div>
+            <div class="pitch-label">Cancha</div>
+          </div>
+        </div>`;
+    }).join('');
+  }).join('');
+
+  // Reset to first tab
+  switchTab('matches');
+}
+
+// ── SHOW SELECTOR ──────────────────────────────────────────────────
+function showSelector() {
+  document.getElementById('selector-screen').style.display = 'block';
+  document.getElementById('dashboard').style.display = 'none';
+}
+
+// ── TABS ──────────────────────────────────────────────────────────
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  const tabs = document.querySelectorAll('.tab');
+  const idx = ['matches','schedule','info'].indexOf(name);
+  if (tabs[idx]) tabs[idx].classList.add('active');
+}
+
+// ── CHECKLIST ──────────────────────────────────────────────────────
+function toggleCheck(el) {
+  el.classList.toggle('checked');
+  el.textContent = el.classList.contains('checked') ? '✓' : '';
+}
+
+// ── INIT ──────────────────────────────────────────────────────────
+buildSelector();
+</script>
+</body>
+</html>
